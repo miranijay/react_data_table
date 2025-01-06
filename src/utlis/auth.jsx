@@ -8,5 +8,7 @@ export const login = () => {
   
 export const logout = () => {
     localStorage.removeItem('isAuthenticated')
+    localStorage.removeItem('userEmail')
+    localStorage.removeItem('userPassword')
 }
   
