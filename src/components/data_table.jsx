@@ -79,7 +79,7 @@ export default function DataTableComponent() {
     return(
         <>
             <div style={{padding: "20px"}}>
-                <h2>Data Table</h2>
+                <h2 style={{color:"whitesmoke"}}>Data Table</h2>
                 <div style={styles.searchContainer}>
                     <input 
                         type="text"
