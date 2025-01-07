@@ -2,7 +2,7 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  background: linear-gradient(135deg, #1a73e8, #42a5f5);
+  background: linear-gradient(135deg, #3386f3, #42a5f5);
   color: #333;
 }
 
@@ -12,7 +12,10 @@ a {
 }
 
 h2 {
-  color: #1a73e8;
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  color: #ffffff;
 }
 
 /* Animations */
