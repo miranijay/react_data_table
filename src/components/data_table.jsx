@@ -2,7 +2,37 @@ import React, { useState } from "react";
 import DataTable from "react-data-table-component";
 import { mockData } from "../Data/mockdata.jsx";
 
+const styles = {
+    searchContainer: {
+      marginBottom: '20px',
+      textAlign: 'right',
+    },
+    searchInput: {
+      padding: '10px',
+      width: '100%',
+      maxWidth: '300px',
+      borderRadius: '5px',
+      border: '1px solid #ccc',
+      fontSize: '16px',
+    },
+}
+
 export default function DataTableComponent() {
+
+    const [searchQuery, setSearchQuery] = useState('')
+    const [filterdata, setfilterdata] = useState(mockData)
+
+    // Handle Search Query Change
+    const handlesearch = (event) => {
+        const query = event.target.value.toLowerCase()
+        setSearchQuery(query)
+
+        // Filter data based on Query 
+        const filtered = mockData.filter(
+            (row) => row.name.toLowerCase().includes(query) || row.email.toLowerCase().includes(query)
+        )
+        setfilterdata(filtered)
+    }
 
     const columns = [
         {
@@ -50,9 +80,18 @@ export default function DataTableComponent() {
         <>
             <div style={{padding: "20px"}}>
                 <h2>Data Table</h2>
+                <div style={styles.searchContainer}>
+                    <input 
+                        type="text"
+                        placeholder="Search..."
+                        value={searchQuery}
+                        onChange={handlesearch}
+                        style={styles.searchInput}
+                    />
+                </div>
                 <DataTable 
                     columns={columns}
-                    data={mockData}
+                    data={filterdata}
                     pagination
                     paginationPerPage={5}
                     paginationRowsPerPageOptions={[5,10,15]}
