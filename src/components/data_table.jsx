@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import DataTable from "react-data-table-component";
 import { mockData } from "../Data/mockdata.jsx";
+import Tooltip from '@mui/material/Tooltip';
 
 const styles = {
     searchContainer: {
@@ -39,20 +40,60 @@ export default function DataTableComponent() {
           name: 'ID',
           selector: (row) => row.id,
           sortable: true,
+          cell: (row) => (
+            <Tooltip title={`User ID: ${row.id}`} arrow>
+              <span>{row.id}</span>
+            </Tooltip>
+          ),
         },
         {
           name: 'Name',
           selector: (row) => row.name,
           sortable: true, // Enable sorting for this column
+          cell: (row) => (
+            <Tooltip title={`Full Name: ${row.name}`} arrow>
+              <span>{row.name}</span>
+            </Tooltip>
+          )
         },
         {
           name: 'Email',
           selector: (row) => row.email,
           sortable: true, // Enable sorting for this column
+          cell: (row) => (
+            <Tooltip title={`Email: ${row.email}`} arrow>
+              <span>{row.email}</span>
+            </Tooltip>
+          )
         },
         {
           name: 'Role',
           selector: (row) => row.role,
+          cell: (row) => (
+            <Tooltip title={`Role: ${row.role}`} arrow>
+              <span>{row.role}</span>
+            </Tooltip>
+          ),
+        },
+        {
+          name: 'Phone',
+          selector: (row) => row.phone,
+          sortable: false,
+          cell: (row) => (
+            <Tooltip title={`Phone: ${row.phone}`} arrow>
+              <span>{row.phone}</span>
+            </Tooltip>
+          ),
+        },
+        {
+          name: 'Address',
+          selector: (row) => row.address,
+          sortable: false,
+          cell: (row) => (
+            <Tooltip title={`Address: ${row.address}`} arrow>
+              <span>{row.address}</span>
+            </Tooltip>
+          ),
         },
     ]
 
@@ -79,7 +120,7 @@ export default function DataTableComponent() {
     return(
         <>
             <div style={{padding: "20px"}}>
-                <h2 style={{color:"whitesmoke"}}>Data Table</h2>
+                <h2 style={{color:"white"}}>Data Table</h2>
                 <div style={styles.searchContainer}>
                     <input 
                         type="text"
