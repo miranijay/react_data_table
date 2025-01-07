@@ -30,7 +30,10 @@ export default function DataTableComponent() {
 
         // Filter data based on Query 
         const filtered = mockData.filter(
-            (row) => row.name.toLowerCase().includes(query) || row.email.toLowerCase().includes(query)
+            (row) => row.name.toLowerCase().includes(query) 
+                      || row.email.toLowerCase().includes(query) 
+                      || row.phone.includes(query)
+                      || row.address.toLowerCase().includes(query)
         )
         setfilterdata(filtered)
     }
