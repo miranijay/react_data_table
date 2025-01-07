@@ -71,7 +71,7 @@ export default function Login() {
         if (email === 'admin@example.com' && password === 'admin') {
           alert('Login successful!')
           login() //admin login
-          navigate('/data-table')
+          navigate('/')
         } else {
             const storedEmail = localStorage.getItem('userEmail')
             const storedPassword = localStorage.getItem('userPassword')

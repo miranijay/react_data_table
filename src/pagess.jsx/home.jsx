@@ -16,7 +16,7 @@ export default function Home() {
 
     useEffect(() => {
         if (isAuthenticated()) {
-            navigate('/data-table');
+            navigate('/');
         } 
         else {
             navigate('/signup');
@@ -31,7 +31,6 @@ export default function Home() {
             style={{ textAlign: 'center', marginTop: '50px' }}
         >
             <h1>Welcome to the App</h1>
-            <p>Redirecting...</p>
         </motion.div>
     )
 }
