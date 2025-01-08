@@ -2,6 +2,12 @@ import React, { useState } from "react";
 import DataTable from "react-data-table-component";
 import { mockData } from "../Data/mockdata.jsx";
 import Tooltip from '@mui/material/Tooltip';
+import Button from "@mui/material/Button";
+import Dialog  from "@mui/material/Dialog";
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import TextField from '@mui/material/TextField';
 
 const styles = {
     searchContainer: {
@@ -20,8 +26,39 @@ const styles = {
 
 export default function DataTableComponent() {
 
+    const [data, setdata] = useState(mockData)
     const [searchQuery, setSearchQuery] = useState('')
     const [filterdata, setfilterdata] = useState(mockData)
+
+    const [editrow, seteditrow] = useState(null)
+    const [open, setOpen] = useState(false)
+
+    // handle Edit
+    const handleEdit = (row) => {
+      seteditrow({...row}) // set row to edit 
+      setOpen(true) // open dialog box
+    }
+
+    // handle Delete
+    const handleDelete = (rowId) => {
+      const updatedata = data.filter((row) => row.id !== rowId)
+      setdata(updatedata)   // update the state with filtered data
+      setfilterdata(updatedata)  // sync with filtered data
+    }
+
+    // Handle Edit Save
+    const handleEditSave = () => {
+      const updatedata = data.map((row) => 
+        row.id === editrow.id ? editrow : row   // update only edited row
+      )
+      setdata(updatedata)
+      setfilterdata(updatedata)
+      setOpen(false)
+    }
+
+    const handleEditChange = (field, value) => {
+        seteditrow((prev) => ({...prev, [field]: value}))
+    }
 
     // Handle Search Query Change
     const handlesearch = (event) => {
@@ -29,11 +66,11 @@ export default function DataTableComponent() {
         setSearchQuery(query)
 
         // Filter data based on Query 
-        const filtered = mockData.filter(
+        const filtered = data.filter(
             (row) => row.name.toLowerCase().includes(query) 
-                      || row.email.toLowerCase().includes(query) 
-                      || row.phone.includes(query)
-                      || row.address.toLowerCase().includes(query)
+                    || row.email.toLowerCase().includes(query) 
+                    || row.phone.includes(query)
+                    || row.address.toLowerCase().includes(query)
         )
         setfilterdata(filtered)
     }
@@ -89,15 +126,28 @@ export default function DataTableComponent() {
           ),
         },
         {
-          name: 'Address',
-          selector: (row) => row.address,
-          sortable: false,
-          cell: (row) => (
-            <Tooltip title={`Address: ${row.address}`} arrow>
-              <span>{row.address}</span>
-            </Tooltip>
-          ),
-        },
+          name: 'Actions',
+          cell : (row) => (
+            <div style={{display: "flex", gap:"10px"}}>
+              <Button
+                variant="contained"
+                size="small"
+                color="primary"
+                onClick={() => handleEdit(row)}
+              >
+                Edit
+              </Button>
+              <Button
+                variant="contained"
+                size="small"
+                color="secondary"
+                onClick={() => handleDelete(row.id)}
+              >
+                Delete
+              </Button>
+            </div>
+          )
+        }
     ]
 
     const customStyles = {
@@ -135,7 +185,7 @@ export default function DataTableComponent() {
                 </div>
                 <DataTable 
                     columns={columns}
-                    data={filterdata}
+                    data={filterdata || []}
                     pagination
                     paginationPerPage={5}
                     paginationRowsPerPageOptions={[5,10,15]}
@@ -143,6 +193,40 @@ export default function DataTableComponent() {
                     striped
                     highlightOnHover
                 />
+                <Dialog open={open} onClose={() => setOpen(false)}>
+                  <DialogTitle>Edit Row</DialogTitle>
+                  <DialogContent>
+                    <TextField 
+                      label="Name"
+                      value={editrow?.name || ''}
+                      onChange={(e) => handleEditChange('name', e.target.value)}
+                      fullWidth
+                      margin="dense"
+                    />
+                    <TextField 
+                      label="Email"
+                      value={editrow?.email || ''}
+                      onChange={(e) => handleEditChange('email', e.target.value)}
+                      fullWidth
+                      margin="dense"
+                    />
+                    <TextField 
+                      label="Role"
+                      value={editrow?.role || ''}
+                      onChange={(e) => handleEditChange('role', e.target.value)}
+                      fullWidth
+                      margin="dense"
+                    />
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={() => setOpen(false)} color="secondary">
+                      Cancel
+                    </Button>
+                    <Button onClick={handleEditSave} color="primary">
+                      Save
+                    </Button>
+                  </DialogActions>
+                </Dialog>
             </div>
         </>
     )
