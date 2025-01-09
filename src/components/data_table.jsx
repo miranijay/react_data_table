@@ -11,8 +11,11 @@ import TextField from '@mui/material/TextField';
 
 const styles = {
     searchContainer: {
+      display: 'flex',
+      justifyContent: 'flex-end',
       marginBottom: '20px',
       textAlign: 'right',
+      gap: '20px',
     },
     searchInput: {
       padding: '10px',
@@ -29,9 +32,9 @@ export default function DataTableComponent() {
     const [data, setdata] = useState(mockData)
     const [searchQuery, setSearchQuery] = useState('')
     const [filterdata, setfilterdata] = useState(mockData)
-
     const [editrow, seteditrow] = useState(null)
     const [open, setOpen] = useState(false)
+    const [selectedRows, setSelectedRows] = useState([])   // selected rows for bulk actions. 
 
     // handle Edit
     const handleEdit = (row) => {
@@ -44,6 +47,19 @@ export default function DataTableComponent() {
       const updatedata = data.filter((row) => row.id !== rowId)
       setdata(updatedata)   // update the state with filtered data
       setfilterdata(updatedata)  // sync with filtered data
+    }
+    
+    // handle selected rows change 
+    const handleSelectedRowsChange = (selectedRowsState) => {
+      setSelectedRows(selectedRowsState.selectedRows || [])
+    }
+    
+    // Handle Bulk delete 
+    const handleBulkDelete = () => {
+      const updatedata = data.filter((row) => !selectedRows.includes(row))
+      setdata(updatedata)
+      setfilterdata(updatedata)
+      setSelectedRows([])  // reset selected rows
     }
 
     // Handle Edit Save
@@ -182,6 +198,16 @@ export default function DataTableComponent() {
                         onChange={handlesearch}
                         style={styles.searchInput}
                     />
+                    {selectedRows.length > 0 && (
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        size="small"
+                        onClick={handleBulkDelete}
+                      >
+                        Delete Selected ({selectedRows.length})
+                      </Button>
+                    )}
                 </div>
                 <DataTable 
                     columns={columns}
@@ -192,6 +218,8 @@ export default function DataTableComponent() {
                     customStyles={customStyles}
                     striped
                     highlightOnHover
+                    selectableRows
+                    onSelectedRowsChange={handleSelectedRowsChange}
                 />
                 <Dialog open={open} onClose={() => setOpen(false)}>
                   <DialogTitle>Edit Row</DialogTitle>
