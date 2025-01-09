@@ -142,6 +142,16 @@ export default function DataTableComponent() {
           ),
         },
         {
+          name: 'Address',
+          selector: (row) => row.address,
+          sortable: false,
+          cell: (row) => (
+            <Tooltip title={`address: ${row.address}`} arrow>
+              <span>{row.address}</span>
+            </Tooltip>
+          )
+        },
+        {
           name: 'Actions',
           cell : (row) => (
             <div style={{display: "flex", gap:"10px"}}>
