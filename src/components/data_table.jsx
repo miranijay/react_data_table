@@ -142,11 +142,11 @@ export default function DataTableComponent() {
           ),
         },
         {
-          name: 'Address',
+          name: 'Adress',
           selector: (row) => row.address,
           sortable: false,
           cell: (row) => (
-            <Tooltip title={`address: ${row.address}`} arrow>
+            <Tooltip title={`Adress: ${row.address}`} arrow>
               <span>{row.address}</span>
             </Tooltip>
           )
