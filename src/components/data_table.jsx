@@ -28,7 +28,6 @@ const styles = {
 }
 
 export default function DataTableComponent() {
-
     const [data, setdata] = useState(mockData)
     const [searchQuery, setSearchQuery] = useState('')
     const [filterdata, setfilterdata] = useState(mockData)
@@ -38,15 +37,15 @@ export default function DataTableComponent() {
 
     // handle Edit
     const handleEdit = (row) => {
-      seteditrow({...row}) // set row to edit 
-      setOpen(true) // open dialog box
+      seteditrow({...row})         // set row to edit 
+      setOpen(true)         // open dialog box
     }
 
     // handle Delete
     const handleDelete = (rowId) => {
       const updatedata = data.filter((row) => row.id !== rowId)
-      setdata(updatedata)   // update the state with filtered data
-      setfilterdata(updatedata)  // sync with filtered data
+      setdata(updatedata)           // update the state with filtered data
+      setfilterdata(updatedata)          // sync with filtered data
     }
     
     // handle selected rows change 
@@ -59,13 +58,13 @@ export default function DataTableComponent() {
       const updatedata = data.filter((row) => !selectedRows.includes(row))
       setdata(updatedata)
       setfilterdata(updatedata)
-      setSelectedRows([])  // reset selected rows
+      setSelectedRows([])      // reset selected rows
     }
 
     // Handle Edit Save
     const handleEditSave = () => {
       const updatedata = data.map((row) => 
-        row.id === editrow.id ? editrow : row   // update only edited row
+        row.id === editrow.id ? editrow : row       // update only edited row
       )
       setdata(updatedata)
       setfilterdata(updatedata)
@@ -115,7 +114,7 @@ export default function DataTableComponent() {
         {
           name: 'Email',
           selector: (row) => row.email,
-          sortable: true, // Enable sorting for this column
+          sortable: true,         // Enable sorting for this column
           cell: (row) => (
             <Tooltip title={`Email: ${row.email}`} arrow>
               <span>{row.email}</span>
@@ -179,7 +178,7 @@ export default function DataTableComponent() {
     const customStyles = {
         rows: {
           style: {
-            minHeight: '45px', // Adjust the row height
+            minHeight: '45px',     // Adjust the row height
           },
         },
         headCells: {
