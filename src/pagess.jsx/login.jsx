@@ -7,7 +7,7 @@ const styles = {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      height: '100vh', // Full screen height
+      height: '100vh', 
       background: 'linear-gradient(135deg, #1a73e8, #42a5f5)',
     },
     form: {
@@ -70,14 +70,14 @@ export default function Login() {
         e.preventDefault();
         if (email === 'admin@example.com' && password === 'admin') {
           alert('Login successful!')
-          login() //admin login
+          login()             //admin login
           navigate('/')
         } else {
             const storedEmail = localStorage.getItem('userEmail')
             const storedPassword = localStorage.getItem('userPassword')
         
             if (storedEmail === email && storedPassword === password) {
-                login() // Regular user login
+                login()         // Regular user login
                 navigate('/')
             } else {
                 alert('Invalid credentials')
@@ -88,7 +88,7 @@ export default function Login() {
     return(
         <div style={styles.container}>
             <form onSubmit={handleLogin} style={styles.form}>
-                <h1>React Data Table</h1>
+                <h1> React Data Table </h1>
                 <h2>Login</h2>
                 <input
                     type="email" 
@@ -104,8 +104,8 @@ export default function Login() {
                     onChange={(e) => setpassword(e.target.value)}
                     style={styles.input}
                 />
-                <button type="submit" style={styles.button} >LogIn</button>
-                <p>Don't have account ? <NavLink to='/signup' style={{color:"blue"}} >SignUp</NavLink></p>
+                <button type="submit" style={styles.button} > LogIn </button>
+                <p>Don't have account ? <NavLink to='/signup' style={{color:"blue"}} > SignUp </NavLink></p>
             </form>
         </div>
     )
